@@ -4,14 +4,15 @@ import OAuth from "@/components/OAuth";
 import { icons, images } from "@/constants";
 import { useSignUp } from "@clerk/clerk-expo";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { useState } from "react";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import ReactNativeModal from "react-native-modal";
 
 
 const SignUp = () => {
     const { isLoaded, signUp, setActive } = useSignUp();
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     const [form, setForm] = useState({
         firstName: "",
@@ -22,7 +23,7 @@ const SignUp = () => {
     });
 
     const [verification, setVerification] = useState({
-        state: "success",
+        state: "default",
         error: "",
         code: "",
     });
@@ -34,7 +35,10 @@ const SignUp = () => {
 
         try {
             await signUp.create({
+                firstName: form.firstName,
+                lastName: form.lastName,
                 emailAddress: form.email,
+                phoneNumber: form.phoneNumber,
                 password: form.password,
             });
 
@@ -46,7 +50,7 @@ const SignUp = () => {
                 state: "pending",
             });
         } catch (err: any) {
-            console.error(JSON.stringify(err, null, 2))
+            Alert.alert("Error", err.errors[0].longMessage);
         };
     };
 
@@ -65,7 +69,7 @@ const SignUp = () => {
                 await setActive({ session: completeSignUp.createdSessionId });
                 setVerification({ ...verification, state: "success" });
             } else {
-                setVerification({ ...verification, error: "Verification failed.", state: "failed" });
+                setVerification({ ...verification, error: "Verification failed.", state: "failed" })
             }
         } catch (err: any) {
             setVerification({ ...verification, error: err.errors[0].longMessage, state: "failed" });
@@ -110,6 +114,7 @@ const SignUp = () => {
                         placeholder="Enter your email"
                         icon={icons.email}
                         value={form.email}
+                        keyboardType="email-address"
                         onChangeText={(value) => setForm({ ...form, email: value })}
                     />
                     <InputField
@@ -117,6 +122,7 @@ const SignUp = () => {
                         placeholder="Enter your phone number"
                         icon={icons.phone}
                         value={form.phoneNumber}
+                        keyboardType="phone-pad"
                         onChangeText={(value) => setForm({ ...form, phoneNumber: value })}
                     />
 
@@ -128,12 +134,13 @@ const SignUp = () => {
                         value={form.password}
                         onChangeText={(value) => setForm({ ...form, password: value })}
                     />
-                    <TouchableOpacity style={{
-                        marginTop: -45,
-                        marginBottom: 50,
-                        marginLeft: 335,
-                    }}>
+                    <TouchableOpacity >
                         <MaterialCommunityIcons
+                            style={{
+                                marginTop: -45,
+                                marginBottom: 50,
+                                marginLeft: 335,
+                            }}
                             name={showPassword ? 'eye-off' : 'eye'}
                             size={25}
                             color="#aaa"
@@ -153,9 +160,45 @@ const SignUp = () => {
                     </Link>
                 </View>
 
-                <ReactNativeModal isVisible={verification.state === "success"}>
+                <ReactNativeModal isVisible={verification.state === "pending"}
+                    onModalHide={() => {
+                        if (verification.state === "success") setShowSuccessModal(true)
+                    }}
+                >
+                    <View className="bg-white px-7 py-9 rounded-2xl min-h-[300px]">
+                        <Text className="text-2xl font-JakartaExtraBold mb-2">Please verify</Text>
+                        <Text className="font-JakartaSemiBold mb-5">Verification code sent to {form.email}. Please check your email.</Text>
+                        <InputField
+                            label="Code"
+                            icon={icons.lock}
+                            placeholder="12345"
+                            value={verification.code}
+                            keyboardType="numeric"
+                            onChangeText={(code) => setVerification({ ...verification, code })}
+                        />
+
+                        {verification.error && (
+                            <Text className="text-red-500 text-sm mt-1">
+                                {verification.error};
+                            </Text>
+                        )}
+
+                        <CustomButton title="Verify Email" onPress={onPressVerify} className="w-full mt-5 bg-success-500 " />
+
+                    </View>
+                </ReactNativeModal>
+
+                <ReactNativeModal isVisible={showSuccessModal}>
                     <View className="bg-white px-7 py-9 rounded-2xl min-h-[300px]">
                         <Image source={images.check} className="w-[110px] h-[110px] mx-auto my-5" />
+                        <Text className="text-3xl font-JakartaBold text-center">
+                            Verification Successful!
+                        </Text>
+                        <Text className="text-base text-center text-gray-400 font-JakartaSemiBold mt-2">Thank-you for successfully verifying your account.</Text>
+                        <CustomButton title="Continue" onPress={() => {
+                            setShowSuccessModal(false);
+                            router.push("/(root)/(tabs)/home");
+                        }} className="mt-10" />
                     </View>
                 </ReactNativeModal>
 
