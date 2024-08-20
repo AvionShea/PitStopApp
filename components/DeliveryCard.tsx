@@ -84,7 +84,7 @@ const DeliveryCard = ({ delivery: {
                 </View>
 
                 <View className="flex flex-row items-center w-full justify-between mb-5">
-                    <Text className="text-md font-JakartaMedium text-gray-500">Vehicle License Plate</Text>
+                    <Text className="text-md font-JakartaMedium text-gray-500">Customer License Plate</Text>
                     <Text className="text-md font-JakartaMedium text-gray-500">{customer_license_plate}
                     </Text>
                 </View>
