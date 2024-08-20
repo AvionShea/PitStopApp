@@ -6,8 +6,8 @@ declare interface Driver {
     last_name: string;
     profile_image_url: string;
     car_image_url: string;
-    car_seats: number;
-    rating: number;
+    vehicle_number: number;
+    company_license_plate: string;
 }
 
 declare interface MarkerData {
@@ -17,8 +17,7 @@ declare interface MarkerData {
     title: string;
     profile_image_url: string;
     car_image_url: string;
-    car_seats: number;
-    rating: number;
+    vehicle_number: number;
     first_name: string;
     last_name: string;
     time?: number;
@@ -33,23 +32,31 @@ declare interface MapProps {
     onMapReady?: () => void;
 }
 
-declare interface Ride {
-    origin_address: string;
+declare interface Delivery {
+    driver_location: string;
+    driver_latitude: number;
+    driver_longitude: number;
+    fuel_grade: string;
+    fuel_price: number;
     destination_address: string;
-    origin_latitude: number;
-    origin_longitude: number;
     destination_latitude: number;
     destination_longitude: number;
     ride_time: number;
-    fare_price: number;
+    delivery_price: number;
+    order_delivery_time: number;
     payment_status: string;
+    action_status: string;
     driver_id: number;
     user_email: string;
     created_at: string;
+    car_make: string;
+    car_model: string;
+    car_color: string;
     driver: {
         first_name: string;
         last_name: string;
-        car_seats: number;
+        vehicle_id: number;
+        company_license_plate: string;
     };
 }
 
@@ -92,9 +99,11 @@ declare interface InputFieldProps extends TextInputProps {
 declare interface PaymentProps {
     fullName: string;
     email: string;
+    gallons_pumped: number;
     amount: string;
     driverId: number;
     rideTime: number;
+    cardNumber: number;
 }
 
 declare interface LocationStore {
