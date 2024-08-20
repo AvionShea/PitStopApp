@@ -5,8 +5,8 @@ declare interface Driver {
     first_name: string;
     last_name: string;
     profile_image_url: string;
-    car_image_url: string;
-    vehicle_number: number;
+    vehicle_image_url: string;
+    company_vehicle_id: number;
     company_license_plate: string;
 }
 
@@ -17,7 +17,6 @@ declare interface MarkerData {
     title: string;
     profile_image_url: string;
     car_image_url: string;
-    vehicle_number: number;
     first_name: string;
     last_name: string;
     time?: number;
@@ -33,30 +32,33 @@ declare interface MapProps {
 }
 
 declare interface Delivery {
-    driver_location: string;
-    driver_latitude: number;
-    driver_longitude: number;
     fuel_grade: string;
     fuel_price: number;
+    gallons_pumped: number;
     destination_address: string;
     destination_latitude: number;
     destination_longitude: number;
-    ride_time: number;
+    estimated_arrival_time: number;
     delivery_price: number;
-    order_delivery_time: number;
+    estimated_order_delivery_time: number;
+    actual_order_delivery_time: string;
+    created_at: string;
     payment_status: string;
     action_status: string;
-    driver_id: number;
     user_email: string;
-    created_at: string;
-    car_make: string;
-    car_model: string;
-    car_color: string;
+    customer_license_plate: string;
+    customer_car_make: string;
+    customer_car_model: string;
+    customer_car_color: string;
+    driver_id: number;
     driver: {
         first_name: string;
         last_name: string;
-        vehicle_id: number;
+        company_vehicle_id: number;
         company_license_plate: string;
+        employee_location: string;
+        employee_latitude: number;
+        employee_longitude: number;
     };
 }
 
@@ -102,7 +104,7 @@ declare interface PaymentProps {
     gallons_pumped: number;
     amount: string;
     driverId: number;
-    rideTime: number;
+    arrivalTime: number;
     cardNumber: number;
 }
 

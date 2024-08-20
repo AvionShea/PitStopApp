@@ -1,33 +1,34 @@
 import DeliveryCard from '@/components/DeliveryCard'
 import GoogleTextInput from '@/components/GoogleTextInput'
 import Map from '@/components/Map'
+import * as Location from "expo-location";
 import { icons, images } from '@/constants'
+import { useLocationStore } from '@/store'
 import { SignedIn, SignedOut, useUser } from '@clerk/clerk-expo'
 import { Link } from 'expo-router'
+import { useEffect, useState } from 'react'
 import { ActivityIndicator, FlatList, Image, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const recentDeliveries = [
     {
         "order_id": "1",
-        "driver_location": "Capital Blvd, Raleigh, NC 27604",
-        "driver_latitude": "35.8373261",
-        "driver_longitude": "-78.5811642",
         "fuel_grade": "91",
         "fuel_price": "3.18",
         "gallons_pumped": "13",
         "destination_address": "W. Peace St., Raleigh, NC 27610",
         "destination_latitude": "35.7886678",
         "destination_longitude": "-78.6506771",
-        "car_make": "",
-        "car_model": "",
-        "car_color": "",
-        "car_license_plate": "",
-        "order_delivery_time": 30,
+        "customer_car_make": "BMW",
+        "customer_car_model": "M5",
+        "customer_car_color": "Isle of Man Green",
+        "customer_license_plate": "CatchMe",
+        "estimated_order_delivery_time": 30,
+        "actual_order_delivery_time": "1:30 AM",
         "delivery_price": "19500.00",
         "payment_status": "paid",
         "card_used": "7412",
-        "action_status": "completed",
+        "action_status": "complete",
         "driver_id": 2,
         "user_id": "1",
         "created_at": "2024-08-11 05:19:20.620007",
@@ -37,18 +38,52 @@ const recentDeliveries = [
             "last_name": "Brown",
             "profile_image_url": "https://ucarecdn.com/6ea6d83d-ef1a-483f-9106-837a3a5b3f67/-/preview/1000x666/",
             "vehicle_image_url": "https://ucarecdn.com/a3872f80-c094-409c-82f8-c9ff38429327/-/preview/930x932/",
-            "vehicle_id": 5,
+            "company_vehicle_id": 5,
             "company_license_plate": "OLS-7192",
+            "employee_location": "Capital Blvd, Raleigh, NC 27604",
+            "employee_latitude": "35.8373261",
+            "employee_longitude": "-78.5811642",
         }
     },
 ]
 
 export default function Page() {
+    const { setUserLocation, setDestinationLocation } = useLocationStore();
     const { user } = useUser();
     const loading = false;
 
+    const [hasPermissions, setHasPermissions] = useState(false);
+
     const handleSignOut = () => { };
     const handleDestinationPress = () => { };
+
+    useEffect(() => {
+        const requestLocation = async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+
+            if (status !== "granted") {
+                setHasPermissions(false);
+                return;
+            }
+
+            let location = await Location.getCurrentPositionAsync({});
+
+            const address = await Location.reverseGeocodeAsync({
+                latitude: location.coords?.latitude!,
+                longitude: location.coords?.longitude,
+            });
+
+            setUserLocation({
+                latitude: location.coords?.latitude,
+                longitude: location.coords?.longitude,
+                address: `${address[0].name}, ${address[0].region}`,
+            });
+
+        };
+
+        requestLocation();
+
+    }, [])
 
     return (
         <SafeAreaView className='bg-general-500'>
