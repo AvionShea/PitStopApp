@@ -3,7 +3,7 @@ import { icons } from "@/constants";
 import { completeDelivery, formatDate, formatTime } from "@/lib/utils";
 import { Image, Text, View } from "react-native";
 
-const DeliveryCard = ({ delivery: {
+const CurrentDeliveryCard = ({ delivery: {
     destination_address,
     destination_latitude,
     destination_longitude,
@@ -53,8 +53,8 @@ const DeliveryCard = ({ delivery: {
             <View className="flex flex-col w-full mt-5 bg-general-500 rounded-lg p-3 items-start justify-center">
 
                 <View className="flex flex-row items-center w-full justify-between mb-5">
-                    <Text className="text-md font-JakartaMedium text-gray-500">{`Date & ${action_status === "complete" ? "Time Delivered" : action_status === "canceled" ? "Time Canceled" : "Est. Delivery Time"}`}</Text>
-                    <Text className="text-md font-JakartaMedium text-gray-500">{`${formatDate(created_at)}, ${action_status === "complete" ? completeDelivery() : action_status === "canceled" ? completeDelivery() : formatTime(estimated_order_delivery_time)}`}
+                    <Text className="text-md font-JakartaMedium text-gray-500">{`Date & ${action_status === "completed" ? "Time Delivered" : action_status === "canceled" ? "Time Canceled" : "Est. Delivery Time"}`}</Text>
+                    <Text className="text-md font-JakartaMedium text-gray-500">{`${formatDate(created_at)}, ${action_status === "completed" ? completeDelivery() : action_status === "canceled" ? completeDelivery() : formatTime(estimated_order_delivery_time)}`}
                     </Text>
                 </View>
 
@@ -97,7 +97,7 @@ const DeliveryCard = ({ delivery: {
 
                 <View className="flex flex-row items-center w-full justify-between mb-5">
                     <Text className="text-md font-JakartaMedium text-gray-500">Action Status</Text>
-                    <Text className={`text-md capitalize font-JakartaMedium ${action_status === "complete" ? "text-green-500" : action_status === "canceled" ? "text-red-500" : "text-gray-500"}`}>{action_status}
+                    <Text className={`text-md capitalize font-JakartaMedium ${action_status === "completed" ? "text-green-500" : action_status === "canceled" ? "text-red-500" : "text-gray-500"}`}>{action_status}
                     </Text>
                 </View>
 
@@ -106,4 +106,4 @@ const DeliveryCard = ({ delivery: {
     </View>
 );
 
-export default DeliveryCard;
+export default CurrentDeliveryCard;

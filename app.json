@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#122B43"
+      "backgroundColor": "#971CE2"
     },
     "ios": {
       "supportsTablet": true
@@ -26,9 +26,7 @@
       "output": "server",
       "favicon": "./assets/images/favicon.png"
     },
-    "plugins": [
-      ["expo-router",{"origin": "https://pitstop.com/"}]
-    ],
+    "plugins": [["expo-router", { "origin": "https://pitstop.com/" }]],
     "experiments": {
       "typedRoutes": true
     }

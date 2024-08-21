@@ -1,11 +1,11 @@
-import DeliveryCard from '@/components/DeliveryCard'
+import CurrentDeliveryCard from '@/components/CurrentDeliveryCard'
 import GoogleTextInput from '@/components/GoogleTextInput'
 import Map from '@/components/Map'
 import * as Location from "expo-location";
 import { icons, images } from '@/constants'
 import { useLocationStore } from '@/store'
 import { SignedIn, SignedOut, useUser } from '@clerk/clerk-expo'
-import { Link } from 'expo-router'
+import { router } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { ActivityIndicator, FlatList, Image, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -28,7 +28,7 @@ const recentDeliveries = [
         "delivery_price": "19500.00",
         "payment_status": "paid",
         "card_used": "7412",
-        "action_status": "complete",
+        "action_status": "completed",
         "driver_id": 2,
         "user_id": "1",
         "created_at": "2024-08-11 05:19:20.620007",
@@ -55,7 +55,16 @@ export default function Page() {
     const [hasPermissions, setHasPermissions] = useState(false);
 
     const handleSignOut = () => { };
-    const handleDestinationPress = () => { };
+
+    const handleDestinationPress = (location: {
+        latitude: number;
+        longitude: number;
+        address: string;
+    }) => {
+        setDestinationLocation(location);
+
+        router.push("/(root)/find-delivery");
+    };
 
     useEffect(() => {
         const requestLocation = async () => {
@@ -86,10 +95,10 @@ export default function Page() {
     }, [])
 
     return (
-        <SafeAreaView className='bg-general-500'>
+        <SafeAreaView className='bg-purple-100'>
             <FlatList
-                data={recentDeliveries?.slice(0, 5)}
-                renderItem={({ item }) => <DeliveryCard delivery={item} />}
+                data={recentDeliveries?.filter(delivery => delivery.action_status !== "completed")}
+                renderItem={({ item }) => <CurrentDeliveryCard delivery={item} />}
                 className='px-5'
                 keyboardShouldPersistTaps="handled"
                 contentContainerStyle={{
@@ -102,10 +111,10 @@ export default function Page() {
                                 <Image
                                     source={images.noResult}
                                     className="w-40 h-40"
-                                    alt="No recent deliveries found"
+                                    alt="No active deliveries"
                                     resizeMode="contain"
                                 />
-                                <Text className="text-lg">No recent deliveries found</Text>
+                                <Text className="text-lg">No active deliveries</Text>
                             </>
                         ) : (
                             <ActivityIndicator size="large" color="#000" />
@@ -139,7 +148,7 @@ export default function Page() {
                         </>
 
                         <Text className='text-xl font-JakartaBold mt-5 mb-3'>
-                            Recent Deliveries
+                            Current Delivery
                         </Text>
 
                     </>

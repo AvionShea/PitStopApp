@@ -4,7 +4,7 @@ import { Image, ImageSourcePropType, View } from "react-native";
 
 const TabIcon = ({ source, focused }: { source: ImageSourcePropType; focused: boolean; }) => (
     <View className={`flex flex-row justify-center items-center rounded-full ${focused ? "bg-general-300" : ""}`}>
-        <View className={`rounded-full w-12 h-12 items-center justify-center ${focused ? "bg-general-400" : ""}`}>
+        <View className={`rounded-full w-12 h-12 items-center justify-center ${focused ? "bg-purple-400" : ""}`}>
             <Image source={source} tintColor="white" resizeMode="contain" className="w-7 h-7" />
         </View>
     </View>
@@ -16,7 +16,7 @@ const Layout = () => (
         tabBarInactiveTintColor: "white",
         tabBarShowLabel: false,
         tabBarStyle: {
-            backgroundColor: "#333333",
+            backgroundColor: "#8C97EA",
             paddingBottom: 0,
             borderRadius: 10,
             overflow: "hidden",
