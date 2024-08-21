@@ -1,5 +1,5 @@
 import { icons } from "@/constants";
-import { formatTravelTime } from "@/lib/utils";
+import { formatTravelTime, formatTime } from "@/lib/utils";
 import { EmployeeCardProps } from "@/types/type";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
@@ -22,18 +22,23 @@ const EmployeeCard = ({ item, selected, setSelected }: EmployeeCardProps) => {
 
                 <View className="flex flex-row items-center justify-start">
 
+                    <Image source={icons.dollar} className="w-4 h-4" />
+                    <Text className="text-sm font-JakartaRegular ml-1">
+                        ${item.surcharge_price}
+                    </Text>
                     <Text className="text-sm font-JakartaRegular text-general-800 mx-1">
                         |
                     </Text>
 
                     <Text className="text-sm font-JakartaRegular text-general-800">
-                        {formatTravelTime(item.travel_time!)}
+                        {formatTravelTime(parseInt(item.time!) || 5)}
                     </Text>
+
                 </View>
             </View>
 
             <Image
-                source={{ uri: item.car_image_url }}
+                source={{ uri: item.vehicle_image_url }}
                 className="h-14 w-14"
                 resizeMode="contain"
             />

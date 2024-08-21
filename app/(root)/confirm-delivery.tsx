@@ -11,11 +11,11 @@ const ConfirmDelivery = () => {
     const { employees, selectedEmployee, setSelectedEmployee } = useEmployeeStore();
 
     return (
-        <DeliveryLayout title="Choose a PitStop Employee" snapPoints={["65%, 85%"]}>
+        <DeliveryLayout title="Choose a PitStop Employee">
             <FlatList
                 data={employees}
                 renderItem={({ item }) => (
-                    <EmployeeCard selected={selectedEmployee!} setSelected={() => setSelectedEmployee(Number(item.id)!)} item={item} />)}
+                    <EmployeeCard item={item} selected={selectedEmployee!} setSelected={() => setSelectedEmployee(Number(item.id)!)} />)}
                 ListFooterComponent={() => (
                     <View className="mx-5 mt-10">
                         <CustomButton title="Select Employee" onPress={() => router.push("/(root)/book-delivery")} />

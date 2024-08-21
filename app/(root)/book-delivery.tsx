@@ -24,7 +24,7 @@ const BookDelivery = () => {
             merchantIdentifier="merchant.pitstop.com" // required for Apple Pay
             urlScheme="myapp" // required for 3D Secure and bank redirects
         >
-            <DeliveryLayout title="Book Delivery">
+            <DeliveryLayout title="Book Delivery" snapPoints={["85%"]}>
                 <>
                     <Text className="text-xl font-JakartaSemiBold mb-3">
                         Delivery Information
@@ -49,7 +49,7 @@ const BookDelivery = () => {
                         <View className="flex flex-row items-center justify-between w-full border-b border-white py-3">
                             <Text className="text-lg font-JakartaRegular">Est. Delivery Time</Text>
                             <Text className="text-lg font-JakartaRegular">
-                                {formatTime(employeeDetails?.travel_time!)}
+                                {formatTime(employeeDetails?.time!)}
                             </Text>
                         </View>
                         <View className="flex flex-row items-center justify-between w-full border-b border-white py-3">
@@ -72,7 +72,7 @@ const BookDelivery = () => {
                     <Payment
                         fullName={user?.fullName!}
                         email={user?.emailAddresses[0].emailAddress!}
-                        amount={employeeDetails?.price}
+                        amount={employeeDetails?.surcharge_price}
                         employeeId={employeeDetails?.id}
                     />
                 </>

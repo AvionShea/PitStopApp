@@ -14,10 +14,11 @@ const FindDelivery = () => {
         setDestinationLocation,
         setUserLocation,
     } = useLocationStore();
+
     return (
         <DeliveryLayout title="Delivery" snapPoints={["78%"]} >
             <View className="my-3">
-                <Text className="text-lg font-JakartaSemiBold mb-3">Current Location: </Text>
+                <Text className="text-lg font-JakartaSemiBold mb-3">Current Location (optional): </Text>
                 <GoogleTextInput
                     icon={icons.target}
                     initialLocation={userAddress!}

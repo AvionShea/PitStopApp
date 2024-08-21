@@ -1,27 +1,19 @@
 import { icons } from "@/constants";
-import { calculateRegion, generateMarkersFromData } from "@/lib/map";
+import { useFetch } from "@/lib/fetch";
+import { calculateEmployeeTimes, calculateRegion, generateMarkersFromData } from "@/lib/map";
 import { useEmployeeStore, useLocationStore } from "@/store";
 import { MarkerData } from "@/types/type";
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 import MapView, { Marker, PROVIDER_DEFAULT } from "react-native-maps"
 
-const pitStopEmployees = [
-    {
-        "id": "1",
-        "first_name": "James",
-        "last_name": "Wilson",
-        "profile_image_url": "https://ucarecdn.com/dae59f69-2c1f-48c3-a883-017bcf0f9950/-/preview/1000x666/",
-        "car_image_url": "https://ucarecdn.com/a2dc52b2-8bf7-4e49-9a36-3ffb5229ed02/-/preview/465x466/",
-        "company_vehicle_id": 4,
-        "company_license_plate": "OLS-7192"
-    },
-]
-
 const Map = () => {
+    const { data: employees, loading, error } = useFetch<Employee[]>("/(api)/employees")
     const {
         userLongitude,
         userLatitude,
+        employeeLatitude,
+        employeeLongitude,
         destinationLatitude,
         destinationLongitude,
     } = useLocationStore();
@@ -33,25 +25,56 @@ const Map = () => {
     const region = calculateRegion({
         userLongitude,
         userLatitude,
+        employeeLatitude,
+        employeeLongitude,
         destinationLatitude,
         destinationLongitude,
     });
 
     useEffect(() => {
-        setEmployees(pitStopEmployees)
 
-        if (Array.isArray(pitStopEmployees)) {
+        if (Array.isArray(employees)) {
             if (!userLatitude || !userLongitude) return;
 
             const newMarkers = generateMarkersFromData({
-                data: pitStopEmployees,
+                data: employees,
                 userLatitude,
                 userLongitude
             });
 
             setMarkers(newMarkers);
-        };
-    }, [pitStopEmployees])
+        }
+    }, [employees]);
+
+    useEffect(() => {
+        if (markers.length > 0 && destinationLatitude && destinationLongitude) {
+            calculateEmployeeTimes({
+                markers,
+                userLatitude,
+                userLongitude,
+                destinationLatitude,
+                destinationLongitude,
+            }).then((employees) => {
+                setEmployees(employees as MarkerData[]);
+            });
+        }
+    }, [markers, destinationLatitude, destinationLongitude]);
+
+    if (loading || (!userLatitude || !userLongitude)) {
+        return (
+            <View className="flex justify-between items-center w-full">
+                <ActivityIndicator size="small" color="#000" />
+            </View>
+        );
+    }
+
+    if (error) {
+        return (
+            <View className="flex justify-between items-center w-full">
+                <Text>Error: {error} </Text>
+            </View>
+        );
+    }
 
     return (
         <MapView
@@ -61,7 +84,6 @@ const Map = () => {
             showsPointsOfInterest={false}
             initialRegion={region}
             showsUserLocation={true}
-            userInterfaceStyle="dark"
         >
             {markers.map((marker) => (
                 <Marker

@@ -8,26 +8,30 @@ declare interface Employee {
   vehicle_image_url: string;
   company_vehicle_id: number;
   company_license_plate: string;
+  location: string;
+  latitude: number;
+  longitude: number;
 }
 
 declare interface MarkerData {
-  latitude?: number;
-  longitude?: number;
+  latitude: number;
+  longitude: number;
   id: number;
   title: string;
-  price: string;
-  profile_image_url: string;
-  car_image_url: string;
   first_name: string;
   last_name: string;
-  travel_time?: number;
+  time?: number;
+  surcharge_price?: string;
+  vehicle_image_url: string;
+  profile_image_url: string;
   company_license_plate: string;
+  company_vehicle_id: string;
 }
 
 declare interface MapProps {
   destinationLatitude?: number;
   destinationLongitude?: number;
-  onEmployeeTimesCalculated?: (EmployeesWithTimes: MarkerData[]) => void;
+  onEmployeeTimesCalculated?: (employeesWithTimes: MarkerData[]) => void;
   selectedEmployee?: number | null;
   onMapReady?: () => void;
 }
@@ -119,6 +123,9 @@ declare interface LocationStore {
   destinationLatitude: number | null;
   destinationLongitude: number | null;
   destinationAddress: string | null;
+  employeeLocation: string | null;
+  employeeLatitude: number | null;
+  employeeLongitude: number | null;
   setUserLocation: ({
     latitude,
     longitude,
@@ -136,6 +143,15 @@ declare interface LocationStore {
     latitude: number;
     longitude: number;
     address: string;
+  }) => void;
+  setEmployeeLocation: ({
+    latitude,
+    longitude,
+    location,
+  }: {
+    latitude: number;
+    longitude: number;
+    location: string;
   }) => void;
 }
 
