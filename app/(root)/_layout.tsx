@@ -7,7 +7,7 @@ const Layout = () => {
             <Stack.Screen name="(tabs)" />
             <Stack.Screen name="find-delivery" />
             <Stack.Screen name="confirm-delivery" />
-            {/* <Stack.Screen name="book-delivery" /> */}
+            <Stack.Screen name="book-delivery" />
         </Stack>
     );
 };

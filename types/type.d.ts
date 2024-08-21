@@ -11,16 +11,17 @@ declare interface Employee {
 }
 
 declare interface MarkerData {
-  latitude: number;
-  longitude: number;
+  latitude?: number;
+  longitude?: number;
   id: number;
   title: string;
+  price: string;
   profile_image_url: string;
   car_image_url: string;
   first_name: string;
   last_name: string;
-  time?: number;
-  price?: string;
+  travel_time?: number;
+  company_license_plate: string;
 }
 
 declare interface MapProps {
@@ -104,11 +105,11 @@ declare interface InputFieldProps extends TextInputProps {
 declare interface PaymentProps {
   fullName: string;
   email: string;
-  gallons_pumped: number;
-  amount: string;
+  gallons_pumped?: number;
+  amount?: string;
   employeeId: number;
-  arrivalTime: number;
-  cardNumber: number;
+  arrivalTime?: number;
+  cardNumber?: number;
 }
 
 declare interface LocationStore {

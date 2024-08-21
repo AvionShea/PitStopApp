@@ -38,6 +38,8 @@ const Map = () => {
     });
 
     useEffect(() => {
+        setEmployees(pitStopEmployees)
+
         if (Array.isArray(pitStopEmployees)) {
             if (!userLatitude || !userLongitude) return;
 
