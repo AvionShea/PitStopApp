@@ -15,7 +15,7 @@ const FindDelivery = () => {
         setUserLocation,
     } = useLocationStore();
     return (
-        <DeliveryLayout title="Delivery">
+        <DeliveryLayout title="Delivery" snapPoints={["78%"]} >
             <View className="my-3">
                 <Text className="text-lg font-JakartaSemiBold mb-3">Current Location: </Text>
                 <GoogleTextInput

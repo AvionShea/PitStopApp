@@ -22,20 +22,19 @@ const recentDeliveries = [
         "payment_status": "paid",
         "customer_card_used": "XX-7412",
         "action_status": "completed",
-        "driver_id": 2,
         "user_id": "1",
         "created_at": "2024-08-11 05:19:20.620007",
-        "driver": {
-            "driver_id": "2",
+        "employee": {
+            "employee_id": "2",
             "first_name": "David",
             "last_name": "Brown",
             "profile_image_url": "https://ucarecdn.com/6ea6d83d-ef1a-483f-9106-837a3a5b3f67/-/preview/1000x666/",
             "vehicle_image_url": "https://ucarecdn.com/a3872f80-c094-409c-82f8-c9ff38429327/-/preview/930x932/",
             "company_vehicle_id": 5,
             "company_license_plate": "OLS-7192",
-            "employee_location": "Capital Blvd, Raleigh, NC 27604",
-            "employee_latitude": "35.8373261",
-            "employee_longitude": "-78.5811642",
+            "location": "Capital Blvd, Raleigh, NC 27604",
+            "latitude": "35.8373261",
+            "longitude": "-78.5811642",
         }
     },
 ]

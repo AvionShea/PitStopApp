@@ -9,8 +9,7 @@ const CurrentDeliveryCard = ({ delivery: {
     destination_longitude,
     created_at,
     estimated_order_delivery_time,
-    actual_order_delivery_time,
-    driver,
+    employee,
     payment_status,
     action_status,
     customer_car_make,
@@ -33,10 +32,10 @@ const CurrentDeliveryCard = ({ delivery: {
 
                 <View className="flex flex-col mx-5 gap-y-5 flex-1">
 
-                    {/* DRIVER'S LOCATION (OPTIONAL) <View className="flex flex-row items-center gap-x-2">
+                    {/* EMPLOYEE'S LOCATION (OPTIONAL) <View className="flex flex-row items-center gap-x-2">
                         <Image source={icons.to} className="w-5 h-5" />
                         <Text className="text-md font-JakartaMedium" numberOfLines={1}>
-                            {driver.employee_location}
+                            {employee.location}
                         </Text>
                     </View>*/}
 
@@ -59,8 +58,8 @@ const CurrentDeliveryCard = ({ delivery: {
                 </View>
 
                 <View className="flex flex-row items-center w-full justify-between mb-5">
-                    <Text className="text-md font-JakartaMedium text-gray-500">PitStop Driver</Text>
-                    <Text className="text-md font-JakartaMedium text-gray-500">{driver.first_name} {driver.last_name}
+                    <Text className="text-md font-JakartaMedium text-gray-500">PitStop Employee</Text>
+                    <Text className="text-md font-JakartaMedium text-gray-500">{employee.first_name} {employee.last_name}
                     </Text>
                 </View>
 

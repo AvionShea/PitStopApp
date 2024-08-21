@@ -7,7 +7,7 @@ import Map from "./Map";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { useRef } from "react";
 
-const DeliveryLayout = ({ title, children }: { title: string; children: React.ReactNode }) => {
+const DeliveryLayout = ({ snapPoints, title, children }: { title: string; children: React.ReactNode; snapPoints?: string[]; }) => {
     const bottomSheetRef = useRef<BottomSheet>(null)
 
     return (
@@ -27,8 +27,11 @@ const DeliveryLayout = ({ title, children }: { title: string; children: React.Re
                     </View>
                     <Map />
                 </View>
-                <BottomSheet ref={bottomSheetRef} snapPoints={["40%", "85%"]} index={0}>
-                    <BottomSheetView style={{ flex: 1, padding: 20 }}>
+                <BottomSheet
+                    ref={bottomSheetRef}
+                    snapPoints={snapPoints || ["47%", "85%"]}
+                    index={0}>
+                    <BottomSheetView style={{ flex: 1, padding: 15 }}>
                         {children}
                     </BottomSheetView>
                 </BottomSheet>

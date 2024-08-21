@@ -9,7 +9,7 @@ const PastDeliveryCard = ({ delivery: {
     destination_longitude,
     created_at,
     actual_order_delivery_time,
-    driver,
+    employee,
     payment_status,
     action_status,
     customer_car_make,
@@ -69,20 +69,20 @@ const PastDeliveryCard = ({ delivery: {
                 </View>
 
                 <View className="flex flex-row items-center w-full justify-between mb-5">
-                    <Text className="text-md font-JakartaMedium text-gray-500">PitStop Driver</Text>
-                    <Text className="text-md font-JakartaMedium text-gray-500">{driver.first_name} {driver.last_name}
+                    <Text className="text-md font-JakartaMedium text-gray-500">PitStop Employee</Text>
+                    <Text className="text-md font-JakartaMedium text-gray-500">{employee.first_name} {employee.last_name}
                     </Text>
                 </View>
 
                 <View className="flex flex-row items-center w-full justify-between mb-5">
-                    <Text className="text-md font-JakartaMedium text-gray-500">PitStop  Vehicle ID #</Text>
-                    <Text className="text-md font-JakartaMedium text-gray-500">{driver.company_vehicle_id}
+                    <Text className="text-md font-JakartaMedium text-gray-500">PitStop Vehicle ID #</Text>
+                    <Text className="text-md font-JakartaMedium text-gray-500">{employee.company_vehicle_id}
                     </Text>
                 </View>
 
                 <View className="flex flex-row items-center w-full justify-between mb-5">
                     <Text className="text-md font-JakartaMedium text-gray-500">PitStop License Plate</Text>
-                    <Text className="text-md font-JakartaMedium text-gray-500">{driver.company_license_plate}
+                    <Text className="text-md font-JakartaMedium text-gray-500">{employee.company_license_plate}
                     </Text>
                 </View>
 

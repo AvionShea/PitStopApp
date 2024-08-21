@@ -1,7 +1,7 @@
 import { TextInputProps, TouchableOpacityProps } from "react-native";
 
-declare interface Driver {
-  driver_id: number;
+declare interface Employee {
+  employee_id: number;
   first_name: string;
   last_name: string;
   profile_image_url: string;
@@ -26,8 +26,8 @@ declare interface MarkerData {
 declare interface MapProps {
   destinationLatitude?: number;
   destinationLongitude?: number;
-  onDriverTimesCalculated?: (driversWithTimes: MarkerData[]) => void;
-  selectedDriver?: number | null;
+  onEmployeeTimesCalculated?: (EmployeesWithTimes: MarkerData[]) => void;
+  selectedEmployee?: number | null;
   onMapReady?: () => void;
 }
 
@@ -53,15 +53,15 @@ declare interface Delivery {
   customer_car_model: string;
   customer_car_color: string;
   customer_card_used: string;
-  driver_id: number;
-  driver: {
+  employee_id: number;
+  employee: {
     first_name: string;
     last_name: string;
     company_vehicle_id: number;
     company_license_plate: string;
-    employee_location: string;
-    employee_latitude: number;
-    employee_longitude: number;
+    location: string;
+    latitude: number;
+    longitude: number;
   };
 }
 
@@ -106,7 +106,7 @@ declare interface PaymentProps {
   email: string;
   gallons_pumped: number;
   amount: string;
-  driverId: number;
+  employeeId: number;
   arrivalTime: number;
   cardNumber: number;
 }
@@ -138,15 +138,15 @@ declare interface LocationStore {
   }) => void;
 }
 
-declare interface DriverStore {
-  drivers: MarkerData[];
-  selectedDriver: number | null;
-  setSelectedDriver: (driverId: number) => void;
-  setDrivers: (drivers: MarkerData[]) => void;
-  clearSelectedDriver: () => void;
+declare interface EmployeeStore {
+  employees: MarkerData[];
+  selectedEmployee: number | null;
+  setSelectedEmployee: (employeeId: number) => void;
+  setEmployees: (employees: MarkerData[]) => void;
+  clearSelectedEmployee: () => void;
 }
 
-declare interface DriverCardProps {
+declare interface EmployeeCardProps {
   item: MarkerData;
   selected: number;
   setSelected: () => void;
