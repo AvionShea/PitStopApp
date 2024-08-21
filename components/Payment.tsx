@@ -47,7 +47,7 @@ const Payment = ({
             merchantDisplayName: "Example, Inc.",
             intentConfiguration: {
                 mode: {
-                    amount: parseInt("13.80") * 100,
+                    amount: parseInt("amount") * 100,
                     currencyCode: "usd",
                 },
                 confirmHandler: async (
@@ -95,7 +95,7 @@ const Payment = ({
                                     destination_address: destinationAddress,
                                     destination_latitude: destinationLatitude,
                                     destination_longitude: destinationLongitude,
-                                    fare_price: parseInt("13.80") * 100,
+                                    fare_price: parseInt("amount") * 100,
                                     payment_status: "paid",
                                     driver_id: employeeId,
                                     user_id: userId,
