@@ -95,7 +95,7 @@ const Payment = ({
                                     destination_address: destinationAddress,
                                     destination_latitude: destinationLatitude,
                                     destination_longitude: destinationLongitude,
-                                    fare_price: parseInt("amount") * 100,
+                                    surcharge_price: parseInt("amount") * 100,
                                     payment_status: "paid",
                                     driver_id: employeeId,
                                     user_id: userId,

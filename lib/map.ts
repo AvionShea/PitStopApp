@@ -109,9 +109,9 @@ export const calculateEmployeeTimes = async ({
         dataToDestination.routes[0].legs[0].duration.value; // Time in seconds
 
       const totalTime = (timeToUser + timeToDestination) / 60; // Total time in minutes
-      const price = (totalTime * 0.5).toFixed(2); // Calculate price based on time
+      const surcharge_price = (totalTime * 0.5).toFixed(2); // Calculate price based on time
 
-      return { ...marker, time: totalTime, price };
+      return { ...marker, time: totalTime, surcharge_price };
     });
 
     return await Promise.all(timesPromises);
