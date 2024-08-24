@@ -1,7 +1,7 @@
 import { useAuth } from "@clerk/clerk-expo";
 import { useStripe } from "@stripe/stripe-react-native";
 import { router } from "expo-router";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Alert, Image, Text, View } from "react-native";
 import { ReactNativeModal } from "react-native-modal";
 
@@ -44,7 +44,7 @@ const Payment = ({
             merchantDisplayName: "PitStop",
             intentConfiguration: {
                 mode: {
-                    amount: parseInt(`${total}`) * 100,
+                    amount: parseFloat(`${total}`) * 100,
                     currencyCode: "usd",
                 },
                 confirmHandler: async (
@@ -83,7 +83,7 @@ const Payment = ({
                         });
 
                         if (result.client_secret) {
-                            await fetchAPI("/(api)/ride/create", {
+                            await fetchAPI("/(api)/delivery/create", {
                                 method: "POST",
                                 headers: {
                                     "Content-Type": "application/json",
@@ -92,7 +92,7 @@ const Payment = ({
                                     destination_address: destinationAddress,
                                     destination_latitude: destinationLatitude,
                                     destination_longitude: destinationLongitude,
-                                    surcharge_price: parseInt(`${total}`) * 100,
+                                    surcharge_price: parseFloat(`${total}`) * 100,
                                     payment_status: "paid",
                                     employee_id: employeeId,
                                     user_id: userId,
@@ -106,7 +106,7 @@ const Payment = ({
                     }
                 },
             },
-            returnURL: "myapp://book-ride",
+            returnURL: "myapp://book-delivery",
         });
 
         if (!error) {
@@ -117,7 +117,7 @@ const Payment = ({
     return (
         <>
             <CustomButton
-                title="Confirm Ride"
+                title="Confirm Delivery"
                 className="my-10"
                 onPress={openPaymentSheet}
             />
@@ -130,12 +130,12 @@ const Payment = ({
                     <Image source={images.check} className="w-28 h-28 mt-5" />
 
                     <Text className="text-2xl text-center font-JakartaBold mt-5">
-                        Booking placed successfully
+                        Delivery placed successfully!
                     </Text>
 
                     <Text className="text-md text-general-200 font-JakartaRegular text-center mt-3">
-                        Thank you for your booking. Your reservation has been successfully
-                        placed. Please proceed with your trip.
+                        Thank you for your booking. Your delivery order has been successfully
+                        placed. Please proceed with your day.
                     </Text>
 
                     <CustomButton

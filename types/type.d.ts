@@ -111,7 +111,7 @@ declare interface PaymentProps {
   fullName: string;
   email: string;
   gallonsPumped?: number;
-  total?: string;
+  total?: number;
   employeeId?: number;
   arrivalTime?: number;
   cardNumber?: string;
