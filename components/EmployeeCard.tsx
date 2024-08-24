@@ -31,7 +31,7 @@ const EmployeeCard = ({ item, selected, setSelected }: EmployeeCardProps) => {
                     </Text>
 
                     <Text className="text-sm font-JakartaRegular text-general-800">
-                        {formatTravelTime(parseInt(item.time!) || 5)}
+                        {formatTravelTime(parseInt(`${item.time!}`) || 5)}
                     </Text>
 
                 </View>

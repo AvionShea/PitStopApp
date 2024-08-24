@@ -1,8 +1,8 @@
 import DeliveryLayout from "@/components/DeliveryLayout";
 import Payment from "@/components/Payment";
 import { icons } from "@/constants";
-import { formatTime } from "@/lib/utils";
-import { useEmployeeStore, useLocationStore } from "@/store";
+import { formatTime, formatTravelTime } from "@/lib/utils";
+import { useDeliveryStore, useEmployeeStore, useLocationStore } from "@/store";
 import { Image, Text, View } from "react-native";
 
 import { StripeProvider } from '@stripe/stripe-react-native';
@@ -13,6 +13,7 @@ const BookDelivery = () => {
     const { user } = useUser();
     const { destinationAddress } = useLocationStore();
     const { employees, selectedEmployee } = useEmployeeStore();
+    const { fuel_grade, fuel_price, customer_card_used, gallons_pumped } = useDeliveryStore();
 
     const employeeDetails = employees?.filter(
         (employee) => +employee.id === selectedEmployee,
@@ -24,7 +25,7 @@ const BookDelivery = () => {
             merchantIdentifier="merchant.pitstop.com" // required for Apple Pay
             urlScheme="myapp" // required for 3D Secure and bank redirects
         >
-            <DeliveryLayout title="Book Delivery" snapPoints={["85%"]}>
+            <DeliveryLayout title="Book Delivery" snapPoints={["45%", "85%"]}>
                 <>
                     <Text className="text-xl font-JakartaSemiBold mb-3">
                         Delivery Information
@@ -47,11 +48,26 @@ const BookDelivery = () => {
                         className="flex flex-col w-full items-start justify-center py-3 px-5 rounded-3xl bg-general-600 mt-5">
 
                         <View className="flex flex-row items-center justify-between w-full border-b border-white py-3">
-                            <Text className="text-lg font-JakartaRegular">Est. Delivery Time</Text>
-                            <Text className="text-lg font-JakartaRegular">
-                                {formatTime(employeeDetails?.time!)}
+                            <Text className="text-lg font-JakartaRegular">Delivery Price</Text>
+                            <Text className="text-lg font-JakartaRegular text-[#0CC25F]">
+                                ${employeeDetails?.surcharge_price}
                             </Text>
                         </View>
+
+                        <View className="flex flex-row items-center justify-between w-full border-b border-white py-3">
+                            <Text className="text-lg font-JakartaRegular">Travel Time</Text>
+                            <Text className="text-lg font-JakartaRegular">
+                                {formatTravelTime(parseInt(`${employeeDetails?.time}`))}
+                            </Text>
+                        </View>
+
+                        <View className="flex flex-row items-center justify-between w-full border-b border-white py-3">
+                            <Text className="text-lg font-JakartaRegular">Est. Delivery Time</Text>
+                            <Text className="text-lg font-JakartaRegular">
+                                {formatTime(parseInt(`${employeeDetails?.time}`))}
+                            </Text>
+                        </View>
+
                         <View className="flex flex-row items-center justify-between w-full border-b border-white py-3">
                             <Text className="text-lg font-JakartaRegular">Company Vehicle License Plate</Text>
                             <Text className="text-lg font-JakartaRegular">
@@ -72,8 +88,13 @@ const BookDelivery = () => {
                     <Payment
                         fullName={user?.fullName!}
                         email={user?.emailAddresses[0].emailAddress!}
-                        amount={employeeDetails?.surcharge_price}
+                        total={employeeDetails?.surcharge_price}
                         employeeId={employeeDetails?.id}
+                        arrivalTime={employeeDetails?.time}
+                        fuelGrade={`${fuel_grade}`}
+                        fuelPrice={`${fuel_price}`}
+                        gallonsPumped={Number(gallons_pumped)}
+                        cardNumber={`${customer_card_used}`}
                     />
                 </>
             </DeliveryLayout>

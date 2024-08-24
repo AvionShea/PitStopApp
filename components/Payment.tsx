@@ -14,11 +14,8 @@ import { PaymentProps } from "@/types/type";
 const Payment = ({
     fullName,
     email,
-    amount,
+    total,
     employeeId,
-    gallons_pumped,
-    arrivalTime,
-    cardNumber,
 }: PaymentProps) => {
     const { initPaymentSheet, presentPaymentSheet } = useStripe();
     const {
@@ -44,10 +41,10 @@ const Payment = ({
 
     const initializePaymentSheet = async () => {
         const { error } = await initPaymentSheet({
-            merchantDisplayName: "Example, Inc.",
+            merchantDisplayName: "PitStop",
             intentConfiguration: {
                 mode: {
-                    amount: parseInt("amount") * 100,
+                    amount: parseInt(`${total}`) * 100,
                     currencyCode: "usd",
                 },
                 confirmHandler: async (
@@ -65,7 +62,7 @@ const Payment = ({
                             body: JSON.stringify({
                                 name: fullName || email.split("@")[0],
                                 email: email,
-                                amount: amount,
+                                amount: total,
                                 paymentMethodId: paymentMethod.id,
                             }),
                         },
@@ -95,13 +92,10 @@ const Payment = ({
                                     destination_address: destinationAddress,
                                     destination_latitude: destinationLatitude,
                                     destination_longitude: destinationLongitude,
-                                    surcharge_price: parseInt("amount") * 100,
+                                    surcharge_price: parseInt(`${total}`) * 100,
                                     payment_status: "paid",
-                                    driver_id: employeeId,
+                                    employee_id: employeeId,
                                     user_id: userId,
-                                    gallons_pumped: gallons_pumped,
-                                    arrivalTime: arrivalTime,
-                                    cardNumber: cardNumber,
                                 }),
                             });
 
@@ -112,7 +106,7 @@ const Payment = ({
                     }
                 },
             },
-            returnURL: "myapp://book-delivery",
+            returnURL: "myapp://book-ride",
         });
 
         if (!error) {
@@ -123,7 +117,7 @@ const Payment = ({
     return (
         <>
             <CustomButton
-                title="Confirm Delivery"
+                title="Confirm Ride"
                 className="my-10"
                 onPress={openPaymentSheet}
             />
@@ -136,12 +130,12 @@ const Payment = ({
                     <Image source={images.check} className="w-28 h-28 mt-5" />
 
                     <Text className="text-2xl text-center font-JakartaBold mt-5">
-                        Order placed successfully
+                        Booking placed successfully
                     </Text>
 
                     <Text className="text-md text-general-200 font-JakartaRegular text-center mt-3">
-                        Thank you for your delivery order. Your reservation has been successfully
-                        placed. Please proceed with your day.
+                        Thank you for your booking. Your reservation has been successfully
+                        placed. Please proceed with your trip.
                     </Text>
 
                     <CustomButton

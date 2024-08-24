@@ -16,6 +16,7 @@ declare interface Employee {
 declare interface MarkerData {
   latitude: number;
   longitude: number;
+  location: string;
   id: number;
   title: string;
   first_name: string;
@@ -109,11 +110,13 @@ declare interface InputFieldProps extends TextInputProps {
 declare interface PaymentProps {
   fullName: string;
   email: string;
-  gallons_pumped?: number;
-  amount?: string;
-  employeeId: number;
+  gallonsPumped?: number;
+  total?: string;
+  employeeId?: number;
   arrivalTime?: number;
-  cardNumber?: number;
+  cardNumber?: string;
+  fuelGrade?: string;
+  fuelPrice?: string;
 }
 
 declare interface LocationStore {
@@ -152,6 +155,27 @@ declare interface LocationStore {
     latitude: number;
     longitude: number;
     location: string;
+  }) => void;
+}
+
+declare interface DeliveryStore {
+  fuel_grade: string | null;
+  fuel_price: string | null;
+  gallons_pumped: number | null;
+  customer_license_plate: string | null;
+  customer_car_make: string | null;
+  customer_car_model: string | null;
+  customer_car_color: string | null;
+  customer_card_used: string | null;
+  setFuelInfo: (info: {
+    grade: string;
+    price: string;
+    gallons: number;
+    licensePlate: string;
+    carMake: string;
+    carModel: string;
+    carColor: string;
+    cardUsed: string;
   }) => void;
 }
 
