@@ -86,9 +86,10 @@ const BookDelivery = () => {
                         </View>
                     </View>
                     <Payment
-                        fullName={user?.fullName!}
+                        firstName={user?.firstName!}
+                        lastName={user?.lastName!}
                         email={user?.emailAddresses[0].emailAddress!}
-                        total={employeeDetails?.surcharge_price}
+                        total={Number(employeeDetails?.surcharge_price)}
                         employeeId={employeeDetails?.id}
                         arrivalTime={employeeDetails?.time}
                         fuelGrade={`${fuel_grade}`}

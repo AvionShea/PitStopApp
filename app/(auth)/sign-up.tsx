@@ -72,7 +72,7 @@ const SignUp = () => {
                         lastName: form.lastName,
                         email: form.email,
                         phoneNumber: form.phoneNumber,
-                        clerkId: completeSignUp.createdUserId,
+                        clerkId: completeSignUp.createdUserId
                     }),
                 });
 

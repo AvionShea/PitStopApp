@@ -12,7 +12,8 @@ import { useLocationStore } from "@/store";
 import { PaymentProps } from "@/types/type";
 
 const Payment = ({
-    fullName,
+    firstName,
+    lastName,
     email,
     total,
     employeeId,
@@ -60,10 +61,10 @@ const Payment = ({
                                 "Content-Type": "application/json",
                             },
                             body: JSON.stringify({
-                                name: fullName || email.split("@")[0],
+                                name: firstName && lastName || email.split("@")[0],
                                 email: email,
                                 amount: total,
-                                paymentMethodId: paymentMethod.id,
+                                payment_method_id: paymentMethod.id
                             }),
                         },
                     );
@@ -78,7 +79,7 @@ const Payment = ({
                                 payment_method_id: paymentMethod.id,
                                 payment_intent_id: paymentIntent.id,
                                 customer_id: customer,
-                                client_secret: paymentIntent.client_secret,
+                                client_secret: paymentIntent.client_secret
                             }),
                         });
 
@@ -95,12 +96,12 @@ const Payment = ({
                                     surcharge_price: parseFloat(`${total}`) * 100,
                                     payment_status: "paid",
                                     employee_id: employeeId,
-                                    user_id: userId,
+                                    user_id: userId
                                 }),
                             });
 
                             intentCreationCallback({
-                                clientSecret: result.client_secret,
+                                clientSecret: result.client_secret
                             });
                         }
                     }
