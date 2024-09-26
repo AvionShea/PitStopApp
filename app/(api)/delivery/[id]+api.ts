@@ -26,21 +26,18 @@ export async function GET(request: Request, { id }: { id: string }) {
             deliveries.action_status,
             deliveries.created_at,
             'employee', json_build_object(
-                'employee_id', employees.employee_id,
+                'employee_id', employees.id,
                 'first_name', employees.first_name,
                 'last_name', employees.last_name,
                 'profile_image_url', employees.profile_image_url,
                 'vehicle_image_url', employees.vehicle_image_url,
                 'company_vehicle_id', employees.company_vehicle_id,
                 'company_license_plate', employees.company_license_plate
-                'location', employees.location
-                'latitude', employees.latitude
-                'longitude', employees.longitude
             ) AS employee 
         FROM 
             deliveries
         INNER JOIN
-            employees ON deliveries.employee_id = employees.employee_id
+            employees ON deliveries.employee_id = employees.id
         WHERE 
             deliveries.user_id = ${id}
         ORDER BY 
