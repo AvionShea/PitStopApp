@@ -3,6 +3,8 @@ import { useState, useEffect, useCallback } from "react";
 export const fetchAPI = async (url: string, options?: RequestInit) => {
   try {
     const response = await fetch(url, options);
+    //const text = response; // Get the raw response text
+    //console.log("Raw response:", text); // Log it to the console
     if (!response.ok) {
       new Error(`HTTP error! status: ${response.status}`);
     }
