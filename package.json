@@ -22,7 +22,7 @@
     "@neondatabase/serverless": "^1.1.0",
     "@react-navigation/native": "^7.3.18",
     "@stripe/stripe-react-native": "^0.76.0",
-    "brace-expansion": "^5.0.9",
+    "brace-expansion": "^5.0.12",
     "expo": "^57.0.19",
     "expo-constants": "~57.0.17",
     "expo-font": "~57.0.3",
