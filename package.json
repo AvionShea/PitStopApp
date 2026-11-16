@@ -37,7 +37,7 @@
     "expo-web-browser": "~57.0.2",
     "form-data": "^4.0.6",
     "glob": "^13.0.6",
-    "image-size": "^2.0.2",
+    "image-size": "^2.0.4",
     "micromatch": "^4.0.8",
     "nativewind": "^4.2.6",
     "npm-check-updates": "^23.1.0",
